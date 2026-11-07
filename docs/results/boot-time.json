@@ -1,0 +1,13 @@
+{
+  "guest": "Alpine 3.24.4 linux-virt",
+  "guest_bench": [
+    "KVMX-BENCH shell_loop_s=4.04",
+    "KVMX-BENCH sha256_16mb_s=0.65",
+    "KVMX-BENCH parallel_loop_s=1.99 vcpus=2",
+    "KVMX-BENCH syscalls_s=0.28"
+  ],
+  "host": "linux/amd64",
+  "mode": "SOFTWARE-EMULATION (TCG)",
+  "recorded": "2026-11-07T21:20:04Z",
+  "total_ms": 11582
+}

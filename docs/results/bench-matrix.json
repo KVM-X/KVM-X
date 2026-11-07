@@ -1,0 +1,403 @@
+{
+  "kvmx_version": "dev",
+  "when": "2026-11-07T21:25:33Z",
+  "host": {
+    "schema_version": 1,
+    "kvmx_version": "dev",
+    "mode": "HARDWARE-KVM",
+    "mode_code": "hardware-kvm",
+    "expected_penalty": "near-native CPU and memory speed (a few percent overhead)",
+    "ready": true,
+    "potential_mode": "HARDWARE-KVM",
+    "blockers": [],
+    "cpu": {
+      "arch": "x86_64",
+      "vendor": "AuthenticAMD",
+      "model": "AMD Ryzen 5 3400G with Radeon Vega Graphics",
+      "logical_cpus": 8,
+      "virt_extension": "svm",
+      "hypervisor_flag": false,
+      "virt_flags": [
+        "svm",
+        "npt"
+      ]
+    },
+    "virt": {
+      "is_vm": false,
+      "is_container": false
+    },
+    "provider": {
+      "id": "bare-metal",
+      "name": "Bare metal (or a container on bare metal)",
+      "product": "MS-7C96",
+      "vendor": "Micro-Star International Co., Ltd.",
+      "evidence": [
+        "no hypervisor flag, no VM detected"
+      ]
+    },
+    "kvm": {
+      "module": "kvm_amd",
+      "module_loaded": true,
+      "module_builtin": false,
+      "module_available": true,
+      "nested_param": "Y",
+      "module_refcount": 0,
+      "dev_kvm_exists": true,
+      "dev_kvm_mode": "0666",
+      "dev_kvm_gid": 990,
+      "dev_kvm_group": "kvm",
+      "dev_kvm_is_char": true,
+      "misc_minor": 232,
+      "kernel_config": {
+        "source": "/proc/config.gz",
+        "kvm": "m",
+        "kvm_intel": "m",
+        "kvm_amd": "m"
+      },
+      "probe": {
+        "opened": true,
+        "api_version": 12,
+        "create_vm_ok": true
+      },
+      "usable": true,
+      "user_in_kvm_group_db": true,
+      "user_in_kvm_group_effective": true,
+      "dev_mshv_exists": false
+    },
+    "sandbox": {
+      "uid": 1000,
+      "user": "user",
+      "cap_sys_module": false,
+      "cap_mknod": false,
+      "cap_sys_admin": false,
+      "seccomp": 0,
+      "no_new_privs": false,
+      "sysfs_read_only": false,
+      "modules_disabled": false,
+      "lib_modules_present": true,
+      "cgroup_version": 2,
+      "has_sudo": true,
+      "sudo_passwordless": false
+    },
+    "tools": {
+      "qemu": "/usr/bin/qemu-system-x86_64",
+      "qemu_version": "11.1.3",
+      "qemu_img": "/opt/android-sdk/emulator/qemu-img",
+      "qemu_has_tcg": true,
+      "virtiofsd": "/usr/bin/virtiofsd",
+      "docker": "/usr/bin/docker",
+      "package_manager": "pacman",
+      "kvmx_shim_active": false
+    },
+    "distro": {
+      "id": "arch",
+      "pretty": "Arch Linux"
+    }
+  },
+  "guest": "Alpine 3.24.4 linux-virt kernel + initramfs (x86_64)",
+  "runs_per_config": 5,
+  "results": [
+    {
+      "id": "kvm",
+      "description": "control: hardware/nested KVM",
+      "mode": "kvm",
+      "runs_ok": 5,
+      "boot_ms_median": 1355,
+      "total_ms_median": 1966,
+      "guest_shell_loop_s_median": 0.31,
+      "guest_sha256_16mb_s_median": 0.11,
+      "guest_parallel_loop_s_median": 0.16,
+      "guest_syscalls_s_median": 0.03,
+      "guest_kernel_boot_s_median": 0.87,
+      "boot_ms_runs": [
+        1335,
+        2423,
+        1355,
+        1747,
+        1325
+      ]
+    },
+    {
+      "id": "tcg-baseline",
+      "description": "single thread, qemu64, pc, 1 vCPU, default tb",
+      "mode": "tcg",
+      "runs_ok": 5,
+      "boot_ms_median": 4772,
+      "total_ms_median": 12470,
+      "guest_shell_loop_s_median": 4.13,
+      "guest_sha256_16mb_s_median": 0.72,
+      "guest_parallel_loop_s_median": 2.21,
+      "guest_syscalls_s_median": 0.28,
+      "guest_kernel_boot_s_median": 3.48,
+      "boot_ms_runs": [
+        4116,
+        4823,
+        5141,
+        4772,
+        4069
+      ]
+    },
+    {
+      "id": "cpu-haswell",
+      "description": "baseline + -cpu Haswell (x86-64-v3 guests)",
+      "mode": "tcg",
+      "runs_ok": 5,
+      "boot_ms_median": 5279,
+      "total_ms_median": 20529,
+      "guest_shell_loop_s_median": 5.63,
+      "guest_sha256_16mb_s_median": 0.96,
+      "guest_parallel_loop_s_median": 2.59,
+      "guest_syscalls_s_median": 5.44,
+      "guest_kernel_boot_s_median": 4.14,
+      "boot_ms_runs": [
+        7619,
+        5279,
+        6020,
+        4967,
+        4573
+      ]
+    },
+    {
+      "id": "cpu-max",
+      "description": "baseline + -cpu max",
+      "mode": "tcg",
+      "runs_ok": 5,
+      "boot_ms_median": 5916,
+      "total_ms_median": 14311,
+      "guest_shell_loop_s_median": 3.97,
+      "guest_sha256_16mb_s_median": 0.93,
+      "guest_parallel_loop_s_median": 2.07,
+      "guest_syscalls_s_median": 0.28,
+      "guest_kernel_boot_s_median": 4.55,
+      "boot_ms_runs": [
+        8370,
+        5916,
+        5533,
+        10737,
+        4734
+      ]
+    },
+    {
+      "id": "tb-32",
+      "description": "cpu max, tb-size 32 MiB",
+      "mode": "tcg",
+      "runs_ok": 5,
+      "boot_ms_median": 5187,
+      "total_ms_median": 13657,
+      "guest_shell_loop_s_median": 4.23,
+      "guest_sha256_16mb_s_median": 0.96,
+      "guest_parallel_loop_s_median": 2.27,
+      "guest_syscalls_s_median": 0.3,
+      "guest_kernel_boot_s_median": 4.02,
+      "boot_ms_runs": [
+        4835,
+        5895,
+        5187,
+        7941,
+        5000
+      ]
+    },
+    {
+      "id": "tb-256",
+      "description": "cpu max, tb-size 256 MiB",
+      "mode": "tcg",
+      "runs_ok": 5,
+      "boot_ms_median": 5540,
+      "total_ms_median": 12540,
+      "guest_shell_loop_s_median": 3.92,
+      "guest_sha256_16mb_s_median": 0.92,
+      "guest_parallel_loop_s_median": 1.9,
+      "guest_syscalls_s_median": 0.26,
+      "guest_kernel_boot_s_median": 4.34,
+      "boot_ms_runs": [
+        8636,
+        5540,
+        5020,
+        7820,
+        5031
+      ]
+    },
+    {
+      "id": "tb-1024",
+      "description": "cpu max, tb-size 1024 MiB",
+      "mode": "tcg",
+      "runs_ok": 5,
+      "boot_ms_median": 5433,
+      "total_ms_median": 12916,
+      "guest_shell_loop_s_median": 3.65,
+      "guest_sha256_16mb_s_median": 1.13,
+      "guest_parallel_loop_s_median": 2.2,
+      "guest_syscalls_s_median": 0.3,
+      "guest_kernel_boot_s_median": 4.36,
+      "boot_ms_runs": [
+        10251,
+        4847,
+        5433,
+        5680,
+        4848
+      ]
+    },
+    {
+      "id": "single-smp4",
+      "description": "cpu max, tb 256, single thread, 4 vCPUs",
+      "mode": "tcg",
+      "runs_ok": 5,
+      "boot_ms_median": 5668,
+      "total_ms_median": 19739,
+      "guest_shell_loop_s_median": 4.36,
+      "guest_sha256_16mb_s_median": 0.9,
+      "guest_parallel_loop_s_median": 8.35,
+      "guest_syscalls_s_median": 0.29,
+      "guest_kernel_boot_s_median": 4.5,
+      "boot_ms_runs": [
+        12164,
+        5668,
+        5438,
+        5777,
+        5345
+      ]
+    },
+    {
+      "id": "mttcg-smp2",
+      "description": "cpu max, tb 256, multi-thread, 2 vCPUs",
+      "mode": "tcg",
+      "runs_ok": 5,
+      "boot_ms_median": 5073,
+      "total_ms_median": 12827,
+      "guest_shell_loop_s_median": 4.07,
+      "guest_sha256_16mb_s_median": 0.72,
+      "guest_parallel_loop_s_median": 2.41,
+      "guest_syscalls_s_median": 0.3,
+      "guest_kernel_boot_s_median": 4.03,
+      "boot_ms_runs": [
+        5475,
+        5073,
+        5992,
+        4463,
+        4414
+      ]
+    },
+    {
+      "id": "mttcg-smp4",
+      "description": "cpu max, tb 256, multi-thread, 4 vCPUs",
+      "mode": "tcg",
+      "runs_ok": 5,
+      "boot_ms_median": 5591,
+      "total_ms_median": 13647,
+      "guest_shell_loop_s_median": 3.95,
+      "guest_sha256_16mb_s_median": 0.83,
+      "guest_parallel_loop_s_median": 2.25,
+      "guest_syscalls_s_median": 0.28,
+      "guest_kernel_boot_s_median": 4.25,
+      "boot_ms_runs": [
+        6423,
+        5772,
+        5591,
+        5257,
+        4777
+      ]
+    },
+    {
+      "id": "machine-q35",
+      "description": "cpu max, tb 256, multi-thread, q35, 2 vCPUs",
+      "mode": "tcg",
+      "runs_ok": 5,
+      "boot_ms_median": 4926,
+      "total_ms_median": 11724,
+      "guest_shell_loop_s_median": 3.77,
+      "guest_sha256_16mb_s_median": 0.65,
+      "guest_parallel_loop_s_median": 1.97,
+      "guest_syscalls_s_median": 0.29,
+      "guest_kernel_boot_s_median": 3.84,
+      "boot_ms_runs": [
+        5523,
+        5228,
+        4443,
+        4329,
+        4926
+      ]
+    },
+    {
+      "id": "machine-microvm",
+      "description": "cpu max, tb 256, multi-thread, microvm, 2 vCPUs",
+      "mode": "tcg",
+      "runs_ok": 5,
+      "boot_ms_median": 5547,
+      "total_ms_median": 13755,
+      "guest_shell_loop_s_median": 3.87,
+      "guest_sha256_16mb_s_median": 0.78,
+      "guest_parallel_loop_s_median": 2.14,
+      "guest_syscalls_s_median": 0.31,
+      "guest_kernel_boot_s_median": 3.39,
+      "boot_ms_runs": [
+        6557,
+        5547,
+        5890,
+        4311,
+        3900
+      ]
+    },
+    {
+      "id": "cmdline-tuned",
+      "description": "mttcg-smp2 + quiet/nokaslr/nowatchdog kernel args",
+      "mode": "tcg",
+      "runs_ok": 5,
+      "boot_ms_median": 5353,
+      "total_ms_median": 14822,
+      "guest_shell_loop_s_median": 4.73,
+      "guest_sha256_16mb_s_median": 0.77,
+      "guest_parallel_loop_s_median": 2.18,
+      "guest_syscalls_s_median": 0.3,
+      "guest_kernel_boot_s_median": 3.97,
+      "boot_ms_runs": [
+        7322,
+        6157,
+        5353,
+        4320,
+        4682
+      ]
+    },
+    {
+      "id": "profile-compat",
+      "description": "shipped profile 'compat'",
+      "mode": "tcg",
+      "runs_ok": 5,
+      "boot_ms_median": 4717,
+      "total_ms_median": 11481,
+      "guest_shell_loop_s_median": 3.69,
+      "guest_sha256_16mb_s_median": 0.68,
+      "guest_parallel_loop_s_median": 1.94,
+      "guest_syscalls_s_median": 0.29,
+      "guest_kernel_boot_s_median": 3.51,
+      "boot_ms_runs": [
+        7807,
+        6682,
+        4717,
+        4584,
+        4408
+      ]
+    },
+    {
+      "id": "profile-balanced",
+      "description": "shipped profile 'balanced'",
+      "mode": "tcg",
+      "runs_ok": 5,
+      "boot_ms_median": 5323,
+      "total_ms_median": 13479,
+      "guest_shell_loop_s_median": 4.63,
+      "guest_sha256_16mb_s_median": 0.73,
+      "guest_parallel_loop_s_median": 2.27,
+      "guest_syscalls_s_median": 0.27,
+      "guest_kernel_boot_s_median": 3.7,
+      "boot_ms_runs": [
+        5449,
+        5323,
+        5608,
+        4487,
+        4925
+      ]
+    }
+  ],
+  "baseline": "tcg-baseline",
+  "reference_note": "boot_ms = host wall time from QEMU start until the guest prints KVMX-BOOT-OK; guest_* are measured inside the guest from /proc/uptime"
+}

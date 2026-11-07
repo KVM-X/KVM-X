@@ -1,0 +1,139 @@
+{
+  "kvmx_version": "dev",
+  "when": "2026-11-07T21:18:48Z",
+  "host": {
+    "schema_version": 1,
+    "kvmx_version": "dev",
+    "mode": "SOFTWARE-EMULATION (TCG)",
+    "mode_code": "software-tcg",
+    "expected_penalty": "CPU-bound guests typically ~10x slower than hardware KVM (5-30x by workload); measure with `kvmx bench`",
+    "ready": false,
+    "ready_note": "QEMU is not installed; run `kvmx enable` to install it",
+    "potential_mode": "HARDWARE-KVM",
+    "blockers": [
+      {
+        "id": "container-no-kvm-device",
+        "summary": "KVM is loaded on the host but /dev/kvm is not passed into this container",
+        "detail": "Start the container with the KVM device (see `kvmx flags docker`).",
+        "fixable": true
+      },
+      {
+        "id": "qemu-missing",
+        "summary": "QEMU for x86_64 is not installed",
+        "detail": "Needed for both KVM and the TCG software fallback.",
+        "fixable": true
+      }
+    ],
+    "cpu": {
+      "arch": "x86_64",
+      "vendor": "AuthenticAMD",
+      "model": "AMD Ryzen 5 3400G with Radeon Vega Graphics",
+      "logical_cpus": 8,
+      "virt_extension": "svm",
+      "hypervisor_flag": false,
+      "virt_flags": [
+        "svm",
+        "npt"
+      ]
+    },
+    "virt": {
+      "is_vm": false,
+      "is_container": true,
+      "container_type": "docker",
+      "evidence": [
+        "/.dockerenv present"
+      ]
+    },
+    "provider": {
+      "id": "bare-metal",
+      "name": "Bare metal (or a container on bare metal)",
+      "product": "MS-7C96",
+      "vendor": "Micro-Star International Co., Ltd.",
+      "evidence": [
+        "no hypervisor flag, no VM detected"
+      ]
+    },
+    "kvm": {
+      "module": "kvm_amd",
+      "module_loaded": true,
+      "module_builtin": false,
+      "module_available": true,
+      "nested_param": "Y",
+      "module_refcount": 0,
+      "dev_kvm_exists": false,
+      "dev_kvm_is_char": false,
+      "misc_minor": 232,
+      "kernel_config": {
+        "source": "/proc/config.gz",
+        "kvm": "m",
+        "kvm_intel": "m",
+        "kvm_amd": "m"
+      },
+      "probe": {
+        "opened": false,
+        "api_version": 0,
+        "create_vm_ok": false
+      },
+      "usable": false,
+      "user_in_kvm_group_db": false,
+      "user_in_kvm_group_effective": false,
+      "dev_mshv_exists": false
+    },
+    "sandbox": {
+      "uid": 0,
+      "user": "user",
+      "cap_sys_module": false,
+      "cap_mknod": true,
+      "cap_sys_admin": false,
+      "seccomp": 2,
+      "no_new_privs": false,
+      "sysfs_read_only": true,
+      "modules_disabled": false,
+      "lib_modules_present": false,
+      "cgroup_version": 2,
+      "has_sudo": false,
+      "sudo_passwordless": true
+    },
+    "tools": {
+      "qemu_has_tcg": false,
+      "user_mode_linux": "/usr/bin/linux.uml",
+      "package_manager": "apt-get",
+      "kvmx_shim_active": false
+    },
+    "distro": {
+      "id": "debian",
+      "version": "13",
+      "pretty": "Debian GNU/Linux 13 (trixie)"
+    },
+    "notes": [
+      "user-mode Linux is installed: `kvmx run --backend uml` runs Linux guests at near-native CPU speed without KVM (not a VM; syscalls are slower).",
+      "The host supports KVM; this container simply lacks the device."
+    ]
+  },
+  "guest": "Alpine 3.24.4 linux-virt kernel + initramfs (x86_64)",
+  "runs_per_config": 5,
+  "results": [
+    {
+      "id": "uml",
+      "description": "user-mode Linux (not a VM; Linux guests only)",
+      "mode": "uml",
+      "runs_ok": 5,
+      "boot_ms_median": 1049,
+      "total_ms_median": 5550,
+      "guest_shell_loop_s_median": 0.37,
+      "guest_sha256_16mb_s_median": 0.14,
+      "guest_parallel_loop_s_median": 0.19,
+      "guest_syscalls_s_median": 3.65,
+      "guest_kernel_boot_s_median": 1.03,
+      "boot_ms_runs": [
+        1054,
+        1049,
+        1046,
+        1099,
+        1000
+      ]
+    }
+  ],
+  "baseline": "tcg-baseline",
+  "reference_note": "boot_ms = host wall time from QEMU start until the guest prints KVMX-BOOT-OK; guest_* are measured inside the guest from /proc/uptime"
+}
