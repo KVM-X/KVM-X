@@ -1,0 +1,29 @@
+# KVM-X in Docker.
+#
+#   docker compose run --rm kvmx-tcg                    # works anywhere: software emulation (TCG)
+#   docker compose --profile kvm run --rm kvmx-kvm      # needs /dev/kvm on the host
+#
+# Compose refuses to start a service whose device path does not exist, so the
+# KVM variant sits behind a profile and the default one needs nothing special.
+services:
+  kvmx-tcg:
+    image: ghcr.io/kvm-x/kvm-x:latest
+    build: .
+    command: ["run", "--demo", "--yes", "--guest-bench"]
+    volumes:
+      - kvmx-cache:/var/cache/kvmx
+
+  kvmx-kvm:
+    profiles: ["kvm"]
+    image: ghcr.io/kvm-x/kvm-x:latest
+    build: .
+    command: ["run", "--demo", "--yes", "--mode", "kvm", "--guest-bench"]
+    devices:
+      - /dev/kvm:/dev/kvm
+    group_add:
+      - "${KVM_GID:-kvm}" # export KVM_GID=$(stat -c %g /dev/kvm) if the group name is not mapped
+    volumes:
+      - kvmx-cache:/var/cache/kvmx
+
+volumes:
+  kvmx-cache:

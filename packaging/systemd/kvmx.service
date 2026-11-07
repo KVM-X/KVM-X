@@ -1,0 +1,12 @@
+[Unit]
+Description=KVM-X: restore KVM device and module setup at boot
+After=local-fs.target systemd-modules-load.service
+Wants=systemd-modules-load.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/bin/kvmx enable --boot --yes
+
+[Install]
+WantedBy=multi-user.target
