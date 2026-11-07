@@ -49,6 +49,17 @@ jobs:
       - uses: softprops/action-gh-release@v3
         with:
           generate_release_notes: true
+          body: |
+            ## Install
+
+            ```bash
+            curl -fsSL https://raw.githubusercontent.com/KVM-X/KVM-X/main/install.sh | bash
+            ```
+
+            Or download `kvmx-linux-amd64` / `kvmx-linux-arm64` below and verify with `SHA256SUMS`
+            (`sha256sum -c --ignore-missing SHA256SUMS`). Container image: `ghcr.io/kvm-x/kvm-x`.
+
+            Start with `kvmx doctor`. Software emulation is never reported as KVM.
           files: |
             dist/kvmx-linux-amd64
             dist/kvmx-linux-arm64

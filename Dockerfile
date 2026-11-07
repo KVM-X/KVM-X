@@ -12,6 +12,9 @@ RUN if [ -n "$TARGETARCH" ]; then export GOARCH="$TARGETARCH"; fi; \
     -o /out/kvmx ./cmd/kvmx
 
 FROM alpine:3.24
+LABEL org.opencontainers.image.source="https://github.com/KVM-X/KVM-X" \
+      org.opencontainers.image.description="KVM-X: detect, enable or fall back from KVM to tuned QEMU TCG" \
+      org.opencontainers.image.licenses="MIT"
 # QEMU for both guest architectures (software emulation works for either).
 RUN apk add --no-cache qemu-system-x86_64 qemu-system-aarch64 qemu-img ca-certificates
 COPY --from=build /out/kvmx /usr/local/bin/kvmx
