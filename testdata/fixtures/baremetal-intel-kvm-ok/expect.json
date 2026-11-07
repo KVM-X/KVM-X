@@ -1,0 +1,7 @@
+{
+  "mode": "HARDWARE-KVM",
+  "potential": "HARDWARE-KVM",
+  "blockers": [],
+  "ready": true,
+  "provider": "bare-metal"
+}

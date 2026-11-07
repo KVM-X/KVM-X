@@ -1,0 +1,8 @@
+{
+  "mode": "HARDWARE-KVM",
+  "potential": "HARDWARE-KVM",
+  "blockers": [
+    "nested-param-off"
+  ],
+  "ready": true
+}

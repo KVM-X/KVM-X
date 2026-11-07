@@ -1,0 +1,10 @@
+{
+  "mode": "SOFTWARE-EMULATION (TCG)",
+  "potential": "SOFTWARE-EMULATION (TCG)",
+  "blockers": [
+    "cpu-no-virt-ext",
+    "qemu-missing"
+  ],
+  "ready": false,
+  "provider": "oracle"
+}

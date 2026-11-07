@@ -1,0 +1,50 @@
+{
+  "goarch": "arm64",
+  "uid": 1000,
+  "username": "dev",
+  "gids": [
+    1000,
+    108
+  ],
+  "groups": [
+    "dev",
+    "kvm"
+  ],
+  "env": {},
+  "commands": [
+    "/usr/bin/qemu-system-aarch64",
+    "/usr/bin/apt-get"
+  ],
+  "exec": {
+    "systemd-detect-virt --vm": {
+      "out": "none\n",
+      "fail": true
+    },
+    "systemd-detect-virt --container": {
+      "out": "none\n",
+      "fail": true
+    },
+    "/usr/bin/qemu-system-aarch64 --version": {
+      "out": "QEMU emulator version 8.2.2\n"
+    },
+    "/usr/bin/qemu-system-aarch64 -accel help": {
+      "out": "Accelerators supported in QEMU binary:\ntcg\nkvm\n"
+    }
+  },
+  "devices": {
+    "/dev/kvm": {
+      "mode": "0660",
+      "major": 10,
+      "minor": 232,
+      "uid": 0,
+      "gid": 108,
+      "group": "kvm"
+    }
+  },
+  "kvm_probe": {
+    "opened": true,
+    "api_version": 12,
+    "create_vm_ok": true
+  },
+  "http": {}
+}

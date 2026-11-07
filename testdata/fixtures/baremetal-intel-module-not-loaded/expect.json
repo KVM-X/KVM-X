@@ -1,0 +1,8 @@
+{
+  "mode": "SOFTWARE-EMULATION (TCG)",
+  "potential": "HARDWARE-KVM",
+  "blockers": [
+    "kvm-module-not-loaded"
+  ],
+  "ready": true
+}

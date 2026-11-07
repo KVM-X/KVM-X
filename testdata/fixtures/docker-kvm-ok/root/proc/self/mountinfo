@@ -1,0 +1,2 @@
+25 1 0:50 / / rw - overlay overlay rw
+26 25 0:6 / /sys ro,nosuid,nodev,noexec - sysfs sysfs ro

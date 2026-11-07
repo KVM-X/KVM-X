@@ -1,0 +1,8 @@
+{
+  "mode": "SOFTWARE-EMULATION (TCG)",
+  "potential": "NESTED-KVM",
+  "blockers": [
+    "dev-kvm-missing"
+  ],
+  "ready": true
+}

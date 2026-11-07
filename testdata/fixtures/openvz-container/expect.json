@@ -1,0 +1,9 @@
+{
+  "mode": "SOFTWARE-EMULATION (TCG)",
+  "potential": "SOFTWARE-EMULATION (TCG)",
+  "blockers": [
+    "kvm-kernel-missing"
+  ],
+  "ready": true,
+  "container": "openvz"
+}

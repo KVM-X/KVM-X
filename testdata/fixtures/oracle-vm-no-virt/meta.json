@@ -1,0 +1,26 @@
+{
+  "goarch": "amd64",
+  "uid": 1000,
+  "username": "dev",
+  "gids": [
+    1000
+  ],
+  "groups": [
+    "dev"
+  ],
+  "env": {},
+  "commands": [],
+  "exec": {
+    "systemd-detect-virt --vm": {
+      "out": "kvm\n",
+      "fail": false
+    },
+    "systemd-detect-virt --container": {
+      "out": "none\n",
+      "fail": true
+    }
+  },
+  "devices": {},
+  "kvm_probe": {},
+  "http": {}
+}

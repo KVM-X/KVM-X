@@ -1,0 +1,2 @@
+25 1 8:1 / / rw,relatime - ext4 /dev/sda1 rw
+26 25 0:6 / /sys rw,nosuid,nodev,noexec - sysfs sysfs rw

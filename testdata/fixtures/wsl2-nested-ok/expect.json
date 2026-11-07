@@ -1,0 +1,7 @@
+{
+  "mode": "NESTED-KVM",
+  "potential": "NESTED-KVM",
+  "blockers": [],
+  "ready": true,
+  "container": "wsl"
+}

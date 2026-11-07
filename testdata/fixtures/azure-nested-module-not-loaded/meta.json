@@ -1,0 +1,37 @@
+{
+  "goarch": "amd64",
+  "uid": 0,
+  "username": "root",
+  "gids": [
+    0
+  ],
+  "groups": [
+    "root"
+  ],
+  "env": {},
+  "commands": [
+    "/usr/bin/qemu-system-x86_64",
+    "/usr/bin/qemu-img",
+    "/usr/bin/apt-get",
+    "/usr/bin/sudo"
+  ],
+  "exec": {
+    "systemd-detect-virt --vm": {
+      "out": "microsoft\n",
+      "fail": false
+    },
+    "systemd-detect-virt --container": {
+      "out": "none\n",
+      "fail": true
+    },
+    "/usr/bin/qemu-system-x86_64 --version": {
+      "out": "QEMU emulator version 8.2.2\n"
+    },
+    "/usr/bin/qemu-system-x86_64 -accel help": {
+      "out": "Accelerators supported in QEMU binary:\ntcg\nkvm\n"
+    }
+  },
+  "devices": {},
+  "kvm_probe": {},
+  "http": {}
+}

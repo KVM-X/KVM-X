@@ -1,0 +1,5 @@
+Name:	kvmx
+CapEff:	0000000000000000
+CapBnd:	0000000000000000
+NoNewPrivs:	0
+Seccomp:	0

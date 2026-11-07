@@ -1,0 +1,52 @@
+{
+  "goarch": "amd64",
+  "uid": 1000,
+  "username": "dev",
+  "gids": [
+    1000
+  ],
+  "groups": [
+    "dev"
+  ],
+  "env": {},
+  "commands": [
+    "/usr/bin/qemu-system-x86_64",
+    "/usr/bin/qemu-img",
+    "/usr/bin/apt-get",
+    "/usr/bin/sudo",
+    "/usr/sbin/usermod",
+    "/usr/sbin/groupadd",
+    "/usr/bin/setfacl"
+  ],
+  "exec": {
+    "systemd-detect-virt --vm": {
+      "out": "none\n",
+      "fail": true
+    },
+    "systemd-detect-virt --container": {
+      "out": "none\n",
+      "fail": true
+    },
+    "/usr/bin/qemu-system-x86_64 --version": {
+      "out": "QEMU emulator version 8.2.2\n"
+    },
+    "/usr/bin/qemu-system-x86_64 -accel help": {
+      "out": "Accelerators supported in QEMU binary:\ntcg\nkvm\n"
+    }
+  },
+  "devices": {
+    "/dev/kvm": {
+      "mode": "0660",
+      "major": 10,
+      "minor": 232,
+      "uid": 0,
+      "gid": 108,
+      "group": "kvm"
+    }
+  },
+  "kvm_probe": {
+    "opened": false,
+    "open_error": "permission denied"
+  },
+  "http": {}
+}
