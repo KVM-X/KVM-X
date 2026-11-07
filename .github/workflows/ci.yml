@@ -81,7 +81,7 @@ jobs:
       - name: install qemu
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends qemu-system-x86 qemu-utils seabios
+          sudo apt-get install -y --no-install-recommends qemu-system-x86 qemu-system-arm qemu-utils seabios
       - name: cache test guest
         uses: actions/cache@v5
         with:

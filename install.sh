@@ -48,8 +48,11 @@ if [ -z "$dest" ]; then
   else
     dest="$HOME/.local/bin"
   fi
-elif [ ! -w "$dest" ] && [ "$(id -u)" -ne 0 ]; then
-  use_sudo=1
+elif [ "$(id -u)" -ne 0 ]; then
+  # writable if the nearest existing ancestor is (the directory itself may not exist yet)
+  probe="$dest"
+  while [ ! -e "$probe" ] && [ "$probe" != "/" ]; do probe="$(dirname "$probe")"; done
+  [ -w "$probe" ] || use_sudo=1
 fi
 
 sudo_note=""
@@ -57,10 +60,15 @@ sudo_note=""
 say "will download  $base/$bin_name"
 say "      verify    $base/SHA256SUMS"
 say "      install   $dest/kvmx$sudo_note"
-if [ "$use_sudo" = 1 ] && [ "${KVMX_YES:-0}" != 1 ] && [ -r /dev/tty ]; then
-  printf 'kvmx-install: continue? [Y/n] ' >/dev/tty
-  read -r ans </dev/tty || ans=n
-  case "$ans" in "" | y | Y | yes | YES) ;; *) die "aborted" ;; esac
+have_tty() { ( : </dev/tty ) 2>/dev/null; }
+if [ "$use_sudo" = 1 ] && [ "${KVMX_YES:-0}" != 1 ]; then
+  if have_tty; then
+    printf 'kvmx-install: continue? [Y/n] ' >/dev/tty
+    read -r ans </dev/tty || ans=n
+    case "$ans" in "" | y | Y | yes | YES) ;; *) die "aborted" ;; esac
+  else
+    say "no terminal to confirm on; continuing (set KVMX_PREFIX to avoid sudo)"
+  fi
 fi
 
 tmp="$(mktemp -d)"

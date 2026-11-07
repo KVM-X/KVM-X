@@ -166,6 +166,22 @@ func TestTCGBootsRealGuest(t *testing.T) {
 	}
 }
 
+// Cross-architecture software emulation: boot the aarch64 Alpine guest on whatever the host is.
+func TestAArch64GuestBootsUnderTCG(t *testing.T) {
+	if _, err := exec.LookPath("qemu-system-aarch64"); err != nil {
+		t.Skip("qemu-system-aarch64 not installed")
+	}
+	if _, err := guest.Ensure("aarch64", guest.EnsureOpts{Yes: true, Out: os.Stderr}); err != nil {
+		t.Fatalf("aarch64 test guest: %v", err)
+	}
+	r := run(t, nil, kvmx(t), "run", "--demo", "--arch", "aarch64", "--mode", "tcg", "--yes", "--json", "--timeout", "10m")
+	var rr runJSON
+	if err := json.Unmarshal([]byte(r.out), &rr); err != nil || !rr.Matched {
+		t.Fatalf("aarch64 guest did not boot: %v\n%.600s\n%.600s", err, tail(r.out), r.err)
+	}
+	t.Logf("aarch64 guest under TCG finished in %d ms", rr.ElapsedMS)
+}
+
 func TestRunModeKVMRefusesToFallBack(t *testing.T) {
 	r := run(t, nil, kvmx(t), "run", "--mode", "kvm", "--demo", "--dry-run", "--fixture", fixture(t, "gcp-no-nested"))
 	if r.code == 0 || !strings.Contains(r.err, "--mode kvm requested") {
