@@ -1,0 +1,26 @@
+version: "2"
+run:
+  timeout: 5m
+linters:
+  default: standard
+  enable:
+    - gosec
+    - misspell
+    - unconvert
+    - bodyclose
+  settings:
+    gosec:
+      excludes:
+        - G204 # subprocess with variable: kvmx builds argv itself and shows every command first
+        - G304 # file inclusion: paths come from the user's own flags
+        - G301
+        - G302
+        - G306 # file modes are chosen deliberately (0644 for /etc config, 0755 for dirs)
+        - G115 # integer conversions in dev_t / mode decoding are bounded
+        - G703 # path taint: every path is a user-supplied flag or a fixed system path, by design
+  exclusions:
+    presets:
+      - std-error-handling
+formatters:
+  enable:
+    - gofmt
