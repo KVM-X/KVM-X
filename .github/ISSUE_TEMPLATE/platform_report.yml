@@ -1,0 +1,44 @@
+name: Platform report
+description: Tell us how kvmx behaves on a provider, distro, container runtime or hypervisor we have not covered
+labels: [platform]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Platform reports are the most useful thing you can send. Run `kvmx collect --out report`
+        and attach the resulting `report/` directory as a zip; it records only what detection reads
+        (CPU flags, DMI vendor strings, module/device facts, tool versions) and anonymises your user name.
+  - type: input
+    id: platform
+    attributes:
+      label: Provider / hypervisor / runtime
+      placeholder: "e.g. Hetzner CX22, Proxmox 8.2 LXC, GCP n2-standard-4, Docker on Synology"
+    validations:
+      required: true
+  - type: input
+    id: distro
+    attributes:
+      label: Distro and kernel
+      placeholder: "e.g. Ubuntu 24.04, 6.8.0-45-generic"
+    validations:
+      required: true
+  - type: dropdown
+    id: result
+    attributes:
+      label: What did `kvmx status` say?
+      options:
+        - HARDWARE-KVM
+        - NESTED-KVM
+        - SOFTWARE-EMULATION (TCG)
+    validations:
+      required: true
+  - type: textarea
+    id: worked
+    attributes:
+      label: What did you do to get KVM (or not) on this platform?
+      description: The provider toggle, plan, flag or config line that made the difference.
+  - type: textarea
+    id: attach
+    attributes:
+      label: Collected report
+      description: Drag the zipped `kvmx collect` output here.

@@ -1,0 +1,42 @@
+name: Bug report
+description: kvmx did something wrong, crashed, or reported the wrong status
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you run, what did you expect, what did you get?
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: kvmx version
+      description: Output of `kvmx version`
+    validations:
+      required: true
+  - type: textarea
+    id: detect
+    attributes:
+      label: Output of `kvmx detect --json`
+      render: json
+    validations:
+      required: true
+  - type: textarea
+    id: cmd
+    attributes:
+      label: Command and full output
+      description: Include `--dry-run` output if you hit a problem in `enable`.
+      render: shell
+  - type: dropdown
+    id: status
+    attributes:
+      label: Is the reported status wrong?
+      description: Reporting software emulation as KVM, or the reverse, is the most serious kind of bug.
+      options:
+        - No, the status is right
+        - Yes, it says KVM but VMs are not hardware-accelerated
+        - Yes, it says TCG but KVM actually works
+    validations:
+      required: true

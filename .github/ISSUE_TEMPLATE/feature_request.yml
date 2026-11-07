@@ -1,0 +1,19 @@
+name: Feature request
+description: Suggest an improvement or a new rung for the enablement ladder
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do?
+      description: Describe the situation (platform, constraints) rather than the solution.
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like kvmx to do?
+  - type: textarea
+    id: alt
+    attributes:
+      label: Alternatives you tried
